@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.app.hms.Models.TestEntity;
 import dev.app.hms.Repo.TestRepository;
 
+import dev.app.hms.Models.TestEntity2;
+import dev.app.hms.Repo.TestRepository2;
+
 @RestController
 @SpringBootApplication
 public class HmsApplication {
@@ -32,6 +35,19 @@ public class HmsApplication {
 		}
 	}
 	
+	@Autowired
+	TestRepository2 tutorialRepository2;
+	@GetMapping("/block")
+	public ResponseEntity<List<TestEntity2>> getAllTutorials2() {
+		try {
+			List<TestEntity2> blocks = new ArrayList<TestEntity2>();
+			tutorialRepository2.findAll().forEach(blocks::add);;
+			return new ResponseEntity<>(blocks, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 	@RequestMapping("/")
 	public String home() {
 		return "Hello Spring boot!";
