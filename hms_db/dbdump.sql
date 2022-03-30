@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.28, for Linux (x86_64)
 --
 -- Host: 127.0.0.1    Database: hospital_db
 -- ------------------------------------------------------
@@ -16,63 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `appoinment`
+-- Table structure for table `appointment`
 --
 
-DROP TABLE IF EXISTS `appoinment`;
+DROP TABLE IF EXISTS `appointment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `appoinment` (
-  `idappoinment` int NOT NULL,
-  `idpatients` int NOT NULL,
-  `idemployee` int NOT NULL,
-  `description` varchar(45) DEFAULT NULL,
-  `idroom` int NOT NULL,
-  `start_time` timestamp(6) NULL DEFAULT NULL,
-  `end_time` timestamp(6) NULL DEFAULT NULL,
-  `issured_time` timestamp(6) NULL DEFAULT NULL,
-  PRIMARY KEY (`idappoinment`),
-  KEY `fk_appoinment_patients1_idx` (`idpatients`),
-  KEY `fk_appoinment_employee1_idx` (`idemployee`),
-  KEY `fk_appoinment_room1_idx` (`idroom`),
-  CONSTRAINT `fk_appoinment_employee1` FOREIGN KEY (`idemployee`) REFERENCES `employee` (`idemployee`),
-  CONSTRAINT `fk_appoinment_patients1` FOREIGN KEY (`idpatients`) REFERENCES `patients` (`idpatients`),
-  CONSTRAINT `fk_appoinment_room1` FOREIGN KEY (`idroom`) REFERENCES `room` (`idroom`)
+CREATE TABLE `appointment` (
+  `idappointment` int NOT NULL,
+  `patient` int NOT NULL,
+  `employee` int NOT NULL,
+  `room` int NOT NULL,
+  `date` date DEFAULT NULL,
+  `time` time DEFAULT NULL,
+  PRIMARY KEY (`idappointment`),
+  KEY `fk_appointment_room1_idx` (`room`),
+  KEY `fk_appointment_patient1_idx` (`patient`),
+  KEY `fk_appointment_employee1_idx` (`employee`),
+  CONSTRAINT `fk_appointment_employee1` FOREIGN KEY (`employee`) REFERENCES `employee` (`idemployee`),
+  CONSTRAINT `fk_appointment_patient1` FOREIGN KEY (`patient`) REFERENCES `patient` (`idpatient`),
+  CONSTRAINT `fk_appointment_room1` FOREIGN KEY (`room`) REFERENCES `room` (`idroom`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `appoinment`
---
-
-LOCK TABLES `appoinment` WRITE;
-/*!40000 ALTER TABLE `appoinment` DISABLE KEYS */;
-/*!40000 ALTER TABLE `appoinment` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `block`
---
-
-DROP TABLE IF EXISTS `block`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `block` (
-  `idblock` int NOT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idblock`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `block`
---
-
-LOCK TABLES `block` WRITE;
-/*!40000 ALTER TABLE `block` DISABLE KEYS */;
-INSERT INTO `block` VALUES (5,'test'),(6,'esa');
-/*!40000 ALTER TABLE `block` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `department`
@@ -89,15 +54,6 @@ CREATE TABLE `department` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `department`
---
-
-LOCK TABLES `department` WRITE;
-/*!40000 ALTER TABLE `department` DISABLE KEYS */;
-/*!40000 ALTER TABLE `department` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `employee`
 --
 
@@ -106,128 +62,81 @@ DROP TABLE IF EXISTS `employee`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `employee` (
   `idemployee` int NOT NULL,
+  `user` int NOT NULL,
+  `department` int NOT NULL,
+  `role_idrole` int NOT NULL,
+  `employee_number` varchar(8) DEFAULT NULL,
   `first_name` varchar(45) DEFAULT NULL,
-  `idroll` int NOT NULL,
-  `iddepartment` int NOT NULL,
+  `last_name` varchar(45) DEFAULT NULL,
+  `date_of_birth` varchar(45) DEFAULT NULL,
+  `phone_number` varchar(45) DEFAULT NULL,
+  `address` varchar(45) DEFAULT NULL,
+  `city` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idemployee`),
-  KEY `fk_employee_roll_idx` (`idroll`),
-  KEY `fk_employee_department1_idx` (`iddepartment`),
-  CONSTRAINT `fk_employee_department1` FOREIGN KEY (`iddepartment`) REFERENCES `department` (`iddepartment`),
-  CONSTRAINT `fk_employee_roll` FOREIGN KEY (`idroll`) REFERENCES `roll` (`idroll`)
+  KEY `fk_employee_department1_idx` (`department`),
+  KEY `fk_employee_user1_idx` (`user`),
+  KEY `fk_employee_role1_idx` (`role_idrole`),
+  CONSTRAINT `fk_employee_department1` FOREIGN KEY (`department`) REFERENCES `department` (`iddepartment`),
+  CONSTRAINT `fk_employee_role1` FOREIGN KEY (`role_idrole`) REFERENCES `role` (`idrole`),
+  CONSTRAINT `fk_employee_user1` FOREIGN KEY (`user`) REFERENCES `user` (`iduser`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `employee`
+-- Table structure for table `patient`
 --
 
-LOCK TABLES `employee` WRITE;
-/*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-/*!40000 ALTER TABLE `employee` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `medication`
---
-
-DROP TABLE IF EXISTS `medication`;
+DROP TABLE IF EXISTS `patient`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `medication` (
-  `idmedication` int NOT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idmedication`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `medication`
---
-
-LOCK TABLES `medication` WRITE;
-/*!40000 ALTER TABLE `medication` DISABLE KEYS */;
-/*!40000 ALTER TABLE `medication` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `patients`
---
-
-DROP TABLE IF EXISTS `patients`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `patients` (
-  `idpatients` int NOT NULL,
+CREATE TABLE `patient` (
+  `idpatient` int NOT NULL,
+  `user` int NOT NULL,
   `first_name` varchar(45) DEFAULT NULL,
-  `seond_name` varchar(45) DEFAULT NULL,
-  `birthday` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idpatients`)
+  `last_name` varchar(45) DEFAULT NULL,
+  `date_of_birth` varchar(45) DEFAULT NULL,
+  `phone_number` varchar(45) DEFAULT NULL,
+  `address` varchar(45) DEFAULT NULL,
+  `city` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idpatient`),
+  KEY `fk_patient_user1_idx` (`user`),
+  CONSTRAINT `fk_patient_user1` FOREIGN KEY (`user`) REFERENCES `user` (`iduser`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `patients`
+-- Table structure for table `prescription_history`
 --
 
-LOCK TABLES `patients` WRITE;
-/*!40000 ALTER TABLE `patients` DISABLE KEYS */;
-/*!40000 ALTER TABLE `patients` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `prescribes`
---
-
-DROP TABLE IF EXISTS `prescribes`;
+DROP TABLE IF EXISTS `prescription_history`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `prescribes` (
-  `idprescribes` int NOT NULL,
-  `idpatients` int NOT NULL,
-  `idappoinment` int NOT NULL,
-  `dose` text,
-  `idmedication` int NOT NULL,
-  PRIMARY KEY (`idprescribes`),
-  KEY `fk_prescribes_patients1_idx` (`idpatients`),
-  KEY `fk_prescribes_appoinment1_idx` (`idappoinment`),
-  KEY `fk_prescribes_mediation1_idx` (`idmedication`),
-  CONSTRAINT `fk_prescribes_appoinment1` FOREIGN KEY (`idappoinment`) REFERENCES `appoinment` (`idappoinment`),
-  CONSTRAINT `fk_prescribes_mediation1` FOREIGN KEY (`idmedication`) REFERENCES `medication` (`idmedication`),
-  CONSTRAINT `fk_prescribes_patients1` FOREIGN KEY (`idpatients`) REFERENCES `patients` (`idpatients`)
+CREATE TABLE `prescription_history` (
+  `idprescription` int NOT NULL,
+  `appointment` int DEFAULT NULL,
+  `stay` int DEFAULT NULL,
+  `result` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idprescription`),
+  KEY `fk_prescription_history_appointment1_idx` (`appointment`),
+  KEY `fk_prescription_history_stay1_idx` (`stay`),
+  CONSTRAINT `fk_prescription_history_appointment1` FOREIGN KEY (`appointment`) REFERENCES `appointment` (`idappointment`),
+  CONSTRAINT `fk_prescription_history_stay1` FOREIGN KEY (`stay`) REFERENCES `stay` (`idstay`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `prescribes`
+-- Table structure for table `role`
 --
 
-LOCK TABLES `prescribes` WRITE;
-/*!40000 ALTER TABLE `prescribes` DISABLE KEYS */;
-/*!40000 ALTER TABLE `prescribes` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `roll`
---
-
-DROP TABLE IF EXISTS `roll`;
+DROP TABLE IF EXISTS `role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `roll` (
-  `idroll` int NOT NULL,
+CREATE TABLE `role` (
+  `idrole` int NOT NULL,
   `name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idroll`)
+  PRIMARY KEY (`idrole`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `roll`
---
-
-LOCK TABLES `roll` WRITE;
-/*!40000 ALTER TABLE `roll` DISABLE KEYS */;
-/*!40000 ALTER TABLE `roll` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `room`
@@ -237,25 +146,15 @@ DROP TABLE IF EXISTS `room`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `room` (
-  `idroom` int NOT NULL AUTO_INCREMENT,
-  `room_name` varchar(45) DEFAULT NULL,
-  `block_floor` int DEFAULT NULL,
-  `avalible` tinyint DEFAULT NULL,
-  `idblock` int NOT NULL,
+  `idroom` int NOT NULL,
+  `department` int NOT NULL,
+  `number` varchar(8) DEFAULT NULL,
+  `type` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idroom`),
-  KEY `fk_room_block1_idx` (`idblock`),
-  CONSTRAINT `fk_room_block1` FOREIGN KEY (`idblock`) REFERENCES `block` (`idblock`)
+  KEY `fk_room_department1_idx` (`department`),
+  CONSTRAINT `fk_room_department1` FOREIGN KEY (`department`) REFERENCES `department` (`iddepartment`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `room`
---
-
-LOCK TABLES `room` WRITE;
-/*!40000 ALTER TABLE `room` DISABLE KEYS */;
-/*!40000 ALTER TABLE `room` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `stay`
@@ -266,48 +165,17 @@ DROP TABLE IF EXISTS `stay`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `stay` (
   `idstay` int NOT NULL,
-  `idpatients` int NOT NULL,
-  `start_time` timestamp(6) NULL DEFAULT NULL,
-  `end_time` timestamp(6) NULL DEFAULT NULL,
-  `idroom` int NOT NULL,
+  `room` int NOT NULL,
+  `patient` int NOT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idstay`),
-  KEY `fk_stay_patients1_idx` (`idpatients`),
-  KEY `fk_stay_room1_idx` (`idroom`),
-  CONSTRAINT `fk_stay_patients1` FOREIGN KEY (`idpatients`) REFERENCES `patients` (`idpatients`),
-  CONSTRAINT `fk_stay_room1` FOREIGN KEY (`idroom`) REFERENCES `room` (`idroom`)
+  KEY `fk_stay_room1_idx` (`room`),
+  KEY `fk_stay_patient1_idx` (`patient`),
+  CONSTRAINT `fk_stay_patient1` FOREIGN KEY (`patient`) REFERENCES `patient` (`idpatient`),
+  CONSTRAINT `fk_stay_room1` FOREIGN KEY (`room`) REFERENCES `room` (`idroom`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `stay`
---
-
-LOCK TABLES `stay` WRITE;
-/*!40000 ALTER TABLE `stay` DISABLE KEYS */;
-/*!40000 ALTER TABLE `stay` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `treatment_history`
---
-
-DROP TABLE IF EXISTS `treatment_history`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `treatment_history` (
-  `idtreatment_history` int NOT NULL,
-  PRIMARY KEY (`idtreatment_history`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `treatment_history`
---
-
-LOCK TABLES `treatment_history` WRITE;
-/*!40000 ALTER TABLE `treatment_history` DISABLE KEYS */;
-/*!40000 ALTER TABLE `treatment_history` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `user`
@@ -318,22 +186,12 @@ DROP TABLE IF EXISTS `user`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
   `iduser` int NOT NULL,
+  `is_employee` tinyint(1) NOT NULL,
   `email` varchar(45) DEFAULT NULL,
   `password` varchar(45) DEFAULT NULL,
-  `userble_type` varchar(45) DEFAULT NULL,
-  `userble_id` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`iduser`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user`
---
-
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Dumping events for database 'hospital_db'
@@ -352,4 +210,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-28 19:04:54
+-- Dump completed on 2022-03-30 22:34:58
