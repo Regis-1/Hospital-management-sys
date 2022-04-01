@@ -193,6 +193,14 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+INSERT INTO `user` (`iduser`,`is_employee`,`email`,`password`)
+VALUES
+  (1,0,"urna.suscipit.nonummy@protonmail.net",5359),
+  (2,0,"lectus@google.com",5548),
+  (3,1,"eu.sem.pellentesque@aol.couk",5139),
+  (4,2,"mattis.integer.eu@hotmail.ca",5008),
+  (5,1,"aliquam.iaculis@outlook.ca",5131);
+
 --
 -- Dumping events for database 'hospital_db'
 --

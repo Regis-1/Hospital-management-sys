@@ -3,29 +3,47 @@ package dev.app.hms.Models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "block")
+@Table(name = "user")
 public class TestEntity2 {
 	@Id
-	private long idblock;
-	@Column(name = "name")
-	private String name;
+	private long iduser;
+	@Column(name = "is_employee")
+	private int is_employee;
+	@Column(name = "email")
+	private String email;
+	@Column(name = "password")
+	private String password;
 	
 	public TestEntity2() {
 	}
-	public TestEntity2(long idblock, String name) {
-		this.idblock = idblock;
-		this.name = name;
+	public TestEntity2(long iduser, int is_employee, String email, String password) {
+		this.iduser = iduser;
+		this.is_employee = is_employee;
+		this.email = email;
+		this.password = email;
 	}
-	public long getidblock() {
-		return idblock;
+	public long getiduser() {
+		return iduser;
 	}
-	public void setidblock(long idblock) {
-		this.idblock = idblock;
+	public void setiduser(long iduser) {
+		this.iduser = iduser;
 	}
-	public String getname() {
-		return name;
+	public int getis_employee() {
+		return is_employee;
 	}
-	public void setname(String name) {
-		this.name = name;
+	public void setis_employee(int is_employee) {
+		this.is_employee = is_employee;
+	}
+	public String getemail() {
+		return email;
+	}
+	public void seteamil(String email) {
+		this.email = email;
+	}
+	public String getpassword() {
+		return password;
+	}
+	public void setpassword(String password) {
+		this.password = password;
 	}
 }

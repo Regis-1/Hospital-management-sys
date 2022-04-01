@@ -37,12 +37,12 @@ public class HmsApplication {
 	
 	@Autowired
 	TestRepository2 tutorialRepository2;
-	@GetMapping("/block")
+	@GetMapping("/user")
 	public ResponseEntity<List<TestEntity2>> getAllTutorials2() {
 		try {
-			List<TestEntity2> blocks = new ArrayList<TestEntity2>();
-			tutorialRepository2.findAll().forEach(blocks::add);;
-			return new ResponseEntity<>(blocks, HttpStatus.OK);
+			List<TestEntity2> users = new ArrayList<TestEntity2>();
+			tutorialRepository2.findAll().forEach(users::add);;
+			return new ResponseEntity<>(users, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
