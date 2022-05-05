@@ -1,0 +1,4 @@
+idemployee,user,department,role_idrole,employee_number,first_name,last_name,date_of_birth,phone_number,address,city
+1,3,1,1,5026,Charity,Buckley,1995.05.5,1-390-259-3231,"5026 Massa.Av",Bogo
+2,4,3,3,4444,Byron,Meadows,1994.04.12,1-448-208-8133,"8983 Dui.Av",Hamburg
+3,5,2,2,3333,Driscoll,Miles,1993.03.4,1-674-754-9246,"743 Suspendisse.Av",Dublin
