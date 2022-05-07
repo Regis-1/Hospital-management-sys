@@ -1,0 +1,229 @@
+openapi: 3.0.1
+info:
+  title: Swagger HSM
+  description: Hosptal managment app
+  termsOfService: http://www.example.com/terms/
+  contact:
+    email: anonymous@example.com
+  license:
+    name: Apache-2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+- url: http://localhost/HSM
+tags:
+- name: Patient records
+  description: access to patients's records stored at service
+  externalDocs:
+    description: Find out more
+    url: http://www.example.com
+paths:
+  /patient:
+    get:
+      tags:
+      - patient
+      summary: find all patients
+      operationId: findAllPatients
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Patients'
+            application/xml:
+              schema:
+                  $ref: '#/components/schemas/Patients'
+      deprecated: false
+      security:
+      - persistdata_auth:
+        - write:patients
+        - read:patients
+    put:
+      tags:
+      - patient
+      summary: update an existing patient
+      operationId: updatePatient
+      requestBody:
+        description: Patient object that needs to be added to the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Patient'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Patient'
+        required: true
+      responses:
+        200:
+          description: Patient updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Patient'
+        404:
+          description: Patient not found
+          content: {}
+        405:
+          description: Validation exception
+          content: {}
+      security:
+      - persistdata_auth:
+        - write:patients
+        - read:patients
+      x-codegen-request-body-name: body
+    post:
+      tags:
+      - patient
+      summary: add a new patient
+      operationId: addPatient
+      requestBody:
+        description: Record object that needs to be added to the system
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Patient'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Patient'
+        required: true
+      responses:
+        200:
+          description: Patient added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Patient'
+        405:
+          description: Validation exception
+          content: {}
+      security:
+      - persistdata_auth:
+        - write:patients
+        - read:patients
+      x-codegen-request-body-name: body
+  /patient/{rollNo}:
+    get:
+      tags:
+      - patient
+      summary: find a patient by rollNo
+      operationId: findPatientByRollNo
+      parameters:
+      - name: rollNo
+        in: path
+        description: Numeric ID of the user to get.
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Patient'
+        400:
+          description: Invalid rollNo supplied
+          content: {}
+        404:
+          description: Patient not found
+          content: {}
+      deprecated: false
+      security:
+      - persistdata_auth:
+        - write:patients
+        - read:patients
+    delete:
+      tags:
+      - patient
+      summary: delete a patient by rollNo
+      operationId: deletePatientByRollNo
+      parameters:
+      - name: rollNo
+        in: path
+        description: Numeric ID of the patient to get.
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Patient'
+        400:
+          description: Invalid rollNo supplied
+          content: {}
+        404:
+          description: Patient not found
+          content: {}
+      deprecated: false
+      security:
+      - persistdata_auth:
+        - write:patients
+        - read:patients
+components:
+  schemas:
+    Patient:
+      required:
+      - first_name
+      - last_name
+      type: object
+      properties:
+        rollNo:
+          type: integer
+          format: int64
+        first_name:
+          type: string
+          example: John
+        last_name:
+          type: string
+          example: Kowalski
+        date_of_birth: 
+          type: string
+          example: "1976.03.1"
+        phone_number: 
+          type: string
+          example: "666-666-666"
+        adress:
+          type: string
+          example: "2873 Dolor. Road"
+        city:
+          type: string
+          example: Awka
+      xml:
+        name: Patient
+    Patients:
+      type: array
+      items:
+        $ref: '#/components/schemas/Patient'
+      xml:
+        name: Patients
+        wrapped: true    
+  securitySchemes:
+    persistdata_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: http://localhost/oauth/dialog
+          scopes:
+            write:patients: modify patients records in your account
+            read:patients: read your patients records
