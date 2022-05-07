@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Table(name = "user")
 public class TestEntity2 {
 	@Id
+	@GeneratedValue
 	private long iduser;
 	@Column(name = "is_employee")
 	private int is_employee;
@@ -13,6 +14,10 @@ public class TestEntity2 {
 	private String email;
 	@Column(name = "password")
 	private String password;
+
+	@OneToOne(mappedBy = "user")
+	private Patient patient;
+
 	
 	public TestEntity2() {
 	}
