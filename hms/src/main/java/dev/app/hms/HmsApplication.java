@@ -50,7 +50,7 @@ public class HmsApplication {
 
 	@RequestMapping("/")
 	public String home() {
-		return "Hello Spring boot! Am'I testing db or is it testing me?'";
+		return "Hello Spring boot! Am I testing the code or is it testing me?";
 	}
 
 	public static void main(String[] args) {
