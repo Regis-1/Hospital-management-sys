@@ -8,16 +8,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.app.hms.Models.TestEntity;
-import dev.app.hms.Repo.TestRepository;
-
 import dev.app.hms.Models.TestEntity2;
+import dev.app.hms.Repo.TestRepository;
 import dev.app.hms.Repo.TestRepository2;
 
+@CrossOrigin
 @RestController
 @SpringBootApplication
 public class HmsApplication {
