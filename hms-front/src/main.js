@@ -12,7 +12,7 @@ import DocsExample from '@/components/DocsExample'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
-axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
 // Vue.use(VueAxios, { $myHttp: axios, axios2: axios2 }) // or app.use() for Vue 3 Optiona API
 
 const app = createApp(App)

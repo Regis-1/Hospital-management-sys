@@ -16,7 +16,7 @@
             </CTableHead>
             <CTableBody>
               <CTableRow v-for="user in users" v-bind:key="user">
-                <CTableHeaderCell scope="row">{{ user.iduser }}</CTableHeaderCell>
+                <CTableHeaderCell scope="row">{{ user.id }}</CTableHeaderCell>
                 <CTableDataCell>{{ user.email }}</CTableDataCell>
                 <CTableDataCell>
                   <a href="#">delete</a>

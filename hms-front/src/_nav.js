@@ -37,22 +37,12 @@ export default [
     items: [
       {
         component: 'CNavItem',
-        name: 'Users',
-        to: '/app/table',
+        name: 'Home view',
+        to: '/',
       },
       {
         component: 'CNavItem',
-        name: 'Employees',
-        to: '/base/breadcrumbs',
-      },
-      {
-        component: 'CNavItem',
-        name: 'Schedules',
-        to: '/base/cards',
-      },
-      {
-        component: 'CNavItem',
-        name: 'Patients',
+        name: 'News',
         to: '/base/carousels',
       },
     ],
@@ -65,8 +55,8 @@ export default [
     items: [
       {
         component: 'CNavItem',
-        name: 'Patients',
-        to: '/base/accordion',
+        name: 'Overview',
+        to: '/app/table',
       },
       {
         component: 'CNavItem',
