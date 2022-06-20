@@ -25,7 +25,7 @@
             </CTableBody>
           </CTable>
           <p class="text-medium-emphasis small">
-            These classes can also be added to table variants:
+            Take some kind of action upon a user account
           </p>
         </CCardBody>
       </CCard>
